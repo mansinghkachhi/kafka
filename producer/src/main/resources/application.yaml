@@ -1,0 +1,20 @@
+server:
+  port: 8081
+spring:
+  application:
+    name: Kafka producer
+  kafka:
+    producer:
+      bootstrap-servers: localhost:9092
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+      acks: all                        # ensure leader+replicas ack
+      retries: 3                       # number of retry attempts
+      delivery-timeout-ms: 30000      # total send timeout
+      batch-size: 16384               # bytes before batching
+      linger-ms: 5                    # wait time to fill batch
+      enable-idempotence: true        # ensure exactly-once
+      properties:
+        spring.json.add.type.headers: false
+    template:
+      default-topic: payment-events
